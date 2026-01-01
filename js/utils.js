@@ -125,8 +125,8 @@ function generateTag(protocol, enableCustomTag, customTagName) {
     if (enableCustomTag && customTagName) {
         const count = (window[protocol + 'Count'] || 0) + 1;
         window[protocol + 'Count'] = count;
-        return `${protocol}-${customTagName}-${count}`;
+        return `${customTagName}-${count}`;
     } else {
-        return `${protocol}-${generateUUID().slice(0, 8)}`;
+        return `${generateUUID().slice(0, 8)}`;
     }
 }
