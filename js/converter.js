@@ -429,7 +429,7 @@ async function convertConfig() {
                 throw new Error('No valid configurations found');
             }
 
-            const singboxConfig = createModernSingboxConfig(outbounds, validTags);
+            const singboxConfig = createModernSingboxConfig(outbounds, validTags, customSubName);
             const jsonString = JSON.stringify(singboxConfig, null, 2);
             editor.setValue(jsonString);
             editor.clearSelection();
