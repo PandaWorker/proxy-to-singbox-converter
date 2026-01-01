@@ -446,7 +446,7 @@ async function convertConfig() {
 }
 
 function createModernSingboxConfig(outbounds, validTags, customSubName) {
-    const subName = customSubName ? customSubName : 🌐 Anonymous Multi;
+    const subName = customSubName ? customSubName : '🌐 Anonymous Multi';
     const subBestName = customSubName ? `${customSubName} Best Ping 🚀` : '👽 Best Ping 🚀';
     
     return {
@@ -475,14 +475,14 @@ function createModernSingboxConfig(outbounds, validTags, customSubName) {
         "outbounds": [
             { "type": "selector", "tag": subName, "outbounds": [subBestName, ...validTags, "direct"] },
             { "type": "direct", "tag": "direct" },
-            { "type": "urltest", "tag": "👽 Best Ping 🚀", "outbounds": validTags, "url": "https://www.gstatic.com/generate_204", "interrupt_exist_connections": false, "interval": "60s" },
+            { "type": "urltest", "tag": subBestName, "outbounds": validTags, "url": "https://www.gstatic.com/generate_204", "interrupt_exist_connections": false, "interval": "60s" },
             ...outbounds
         ],
         "route": {
             "rules": [
                 { "ip_cidr": "172.18.0.2", "action": "hijack-dns" },
                 { "clash_mode": "Direct", "outbound": "direct" },
-                { "clash_mode": "Global", "outbound": "🌐 Anonymous Multi" },
+                { "clash_mode": "Global", "outbound": subName },
                 { "action": "sniff" },
                 { "protocol": "dns", "action": "hijack-dns" },
                 { "network": "udp", "action": "reject" },
@@ -503,7 +503,7 @@ function createModernSingboxConfig(outbounds, validTags, customSubName) {
             ],
             "auto_detect_interface": true,
             "default_domain_resolver": { "server": "dns-direct", "strategy": "prefer_ipv4", "rewrite_ttl": 60 },
-            "final": "🌐 Anonymous Multi"
+            "final": subName
         },
         "ntp": { "enabled": true, "server": "time.cloudflare.com", "server_port": 123, "domain_resolver": "dns-direct", "interval": "30m", "write_to_system": false },
         "experimental": {
