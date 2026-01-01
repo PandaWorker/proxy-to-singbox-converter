@@ -354,6 +354,8 @@ async function convertConfig() {
     const errorDiv = document.getElementById('error');
     const enableCustomTag = document.getElementById('enableCustomTag').checked;
     const customTagName = document.getElementById('customTagInput').value.trim();
+    const enableCustomSub = document.getElementById('enableCustomSub').checked;
+    const customSubName = document.getElementById('customSubInput').value.trim();
 
     if (!input) {
         errorDiv.textContent = 'Please enter proxy configurations or Sing-box JSON';
@@ -443,12 +445,15 @@ async function convertConfig() {
     }
 }
 
-function createModernSingboxConfig(outbounds, validTags) {
+function createModernSingboxConfig(outbounds, validTags, customSubName) {
+    const subName = customSubName ? customSubName : 🌐 Anonymous Multi;
+    const subBestName = customSubName ? `${customSubName} Best Ping 🚀` : '👽 Best Ping 🚀';
+    
     return {
         "log": { "level": "warn", "timestamp": true },
         "dns": {
             "servers": [
-                { "type": "https", "server": "8.8.8.8", "detour": "🌐 Anonymous Multi", "tag": "dns-remote" },
+                { "type": "https", "server": "8.8.8.8", "detour": subName, "tag": "dns-remote" },
                 { "type": "udp", "server": "8.8.8.8", "server_port": 53, "tag": "dns-direct" },
                 { "type": "fakeip", "tag": "dns-fake", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18" }
             ],
@@ -468,9 +473,9 @@ function createModernSingboxConfig(outbounds, validTags) {
             { "type": "mixed", "tag": "mixed-in", "listen": "0.0.0.0", "listen_port": 2080 }
         ],
         "outbounds": [
-            { "type": "selector", "tag": "🌐 Anonymous Multi", "outbounds": ["👽 Best Ping 🚀", ...validTags, "direct"] },
+            { "type": "selector", "tag": subName, "outbounds": [subBestName, ...validTags, "direct"] },
             { "type": "direct", "tag": "direct" },
-            { "type": "urltest", "tag": "👽 Best Ping 🚀", "outbounds": validTags, "url": "https://www.gstatic.com/generate_204", "interrupt_exist_connections": false, "interval": "30s" },
+            { "type": "urltest", "tag": "👽 Best Ping 🚀", "outbounds": validTags, "url": "https://www.gstatic.com/generate_204", "interrupt_exist_connections": false, "interval": "60s" },
             ...outbounds
         ],
         "route": {
