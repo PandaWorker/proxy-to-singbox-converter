@@ -155,3 +155,9 @@ function toggleCustomTagInput() {
     const input = document.getElementById('customTagInput');
     input.disabled = !checkbox.checked;
 }
+
+function toggleCustomSubInput() {
+    const checkbox = document.getElementById('enableCustomSub');
+    const input = document.getElementById('customSubInput');
+    input.disabled = !checkbox.checked;
+}
