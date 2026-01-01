@@ -67,6 +67,13 @@
                 </label>
                 <input type="text" id="customTagInput" class="subscription-input" placeholder="Enter custom tag name (e.g., Anonymous)" disabled />
             </div>
+            <div class="terminal-section">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" id="enableCustomTag" onchange="toggleCustomSubInput()" />
+                    Enable Custom Sub Name
+                </label>
+                <input type="text" id="customTagInput" class="subscription-input" placeholder="Enter custom sub name (e.g., Eazy VPN)" disabled />
+            </div>
             <div class="terminal-actions">
                 <button onclick="convertConfig()" class="glow-button primary">Convert to Sing-box</button>
                 <button id="clearButton" onclick="clearAll()" class="glow-button secondary" disabled>Clear</button>
