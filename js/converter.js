@@ -397,17 +397,20 @@ async function convertConfig() {
 
             for (const config of configs) {
                 let converted;
+                const hash = decodeURIComponent(new URL(config).hash.slice(1));
+                const tag = enableCustomTag && customTagName === 'hash' && hash.length > 3 ? hash : customTagName;
+                
                 try {
                     if (config.startsWith('vmess://')) {
-                        converted = convertVmess(config, enableCustomTag, customTagName);
+                        converted = convertVmess(config, enableCustomTag, tag);
                     } else if (config.startsWith('vless://')) {
-                        converted = convertVless(config, enableCustomTag, customTagName);
+                        converted = convertVless(config, enableCustomTag, tag);
                     } else if (config.startsWith('trojan://')) {
-                        converted = convertTrojan(config, enableCustomTag, customTagName);
+                        converted = convertTrojan(config, enableCustomTag, tag);
                     } else if (config.startsWith('hysteria2://') || config.startsWith('hy2://')) {
-                        converted = convertHysteria2(config, enableCustomTag, customTagName);
+                        converted = convertHysteria2(config, enableCustomTag, tag);
                     } else if (config.startsWith('ss://')) {
-                        converted = convertShadowsocks(config, enableCustomTag, customTagName);
+                        converted = convertShadowsocks(config, enableCustomTag, tag);
                     }
                 } catch (e) {
                     console.error(`Failed to convert config: ${config}`, e);
